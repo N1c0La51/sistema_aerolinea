@@ -9,11 +9,13 @@ const PesoMaximoMaleta = 23; //en kilogramos
 const costoBaseMaleta = 20000; //costo base de una maleta que no excede el peso maximo
 const costoExtraPorKilo = 5000; //costo extra por cada kilogramo adicional
 
+
+
 function calcularCostoMaleta(pesoMaleta) {
     let costoTotalMaleta = costoBaseMaleta;
 
     if (pesoMaleta > PesoMaximoMaleta) {
-        const pesoExcedido = pesoMaleta - PesoMaximoMaleta;
+        const pesoExcedido = pesoMaleta - PesoMaximoMaleta;2
         const costoExtra = pesoExcedido * costoExtraPorKilo;
         costoTotalMaleta += costoExtra;
     }
