@@ -8,6 +8,11 @@ let maletasCali = 0;
 let maletasManizales = 0;
 let maletasBarranquilla = 0;
 let maletasBogota = 0;
+let pesoTotalMaletas = 0;
+
+function calcularPesoTotalMaletas() {
+    console.log(`El peso total de las maletas en el avion es: ${pesoTotalMaletas} KG.`)
+}
 
 function ProcesarMaleta(destino) {
     switch (destino) {
@@ -73,20 +78,21 @@ function validarGenero(genero) {
     return genero.toLowerCase() === 'masculino' || genero.toLowerCase() === 'femenino';
 }
 
-//constantes de peso de la maleta
-const PesoMaximoMaleta = 23; //en kilogramos
-const costoBaseMaleta = 20000; //costo base de una maleta que no excede el peso maximo
-const costoExtraPorKilo = 5000; //costo extra por cada kilogramo adicional
-
+//funcion para calcular el costo de las maletas
 function calcularCostoMaleta(pesoMaleta) {
-    let costoTotalMaleta = costoBaseMaleta;
+    let costoTotalMaleta = 0;
+    const costoBaseMaleta = 20000;
+    const pesoMaximoMaleta = 23;
+    const costoPorKiloAdicional = 5000;
 
-    if (pesoMaleta > PesoMaximoMaleta) {
-        const pesoExcedido = pesoMaleta - PesoMaximoMaleta; 2
-        const costoExtra = pesoExcedido * costoExtraPorKilo;
-        costoTotalMaleta += costoExtra;
+    if (pesoMaleta > pesoMaximoMaleta) {
+        const KilosExtra = pesoMaleta - pesoMaximoMaleta;
+        const costoAdicional = KilosExtra * costoPorKiloAdicional;
+        costoTotalMaleta = costoBaseMaleta + costoAdicional;
+    } else {
+        costoTotalMaleta = costoBaseMaleta;
     }
-    return costoTotalMaleta
+    return costoTotalMaleta;
 }
 
 // Lista de destinos válidos
@@ -130,6 +136,7 @@ function registrarMaleta() {
     const pesoMaleta = parseFloat(readlineSync.question(`Ingrese el peso de la maleta en KG: `));
 
     if (!isNaN(pesoMaleta) && pesoMaleta > 0) {
+        pesoTotalMaletas += pesoMaleta;
         const costoTotal = calcularCostoMaleta(pesoMaleta);
         console.log(`El costo total de la maleta es: ${costoTotal}`);
     } else {
@@ -148,10 +155,15 @@ function registrarMaleta() {
 }
 
 // Ejemplo de uso
-registrarMaleta();
-registrarMaleta();
-registrarMaleta();
-registrarMaleta();
-
+const cantidadMaletas = parseInt(readlineSync.question(`Ingrese la cantidad de maletas a registrar: `));
+if (!isNaN(cantidadMaletas) && cantidadMaletas > 0) {
+    for (let i = 0; i < cantidadMaletas; i++) {
+        console.log(`---Registro de la maleta ${i + 1}---`);
+        registrarMaleta();
+    }
+    calcularPesoTotalMaletas();
+} else {
+    console.log(`La cantidad ingresada no es valida. Por favor, ingrese un numero valido.`);
+}
 const DestinoMasDespachado = obtenerDestinoMasDespachado();
 console.log(`El destino al que mas se despacharon maletas es: ${DestinoMasDespachado}`);
