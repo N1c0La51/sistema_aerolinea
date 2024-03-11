@@ -172,4 +172,4 @@ console.log(`Promedio de peso de las maletas de los hombres: ${promedioPesoHombr
 console.log(`Promedio de peso de las maletas de las mujeres: ${promedioPesoMujeres} KG`);
 
 const DestinoMasDespachado = obtenerDestinoMasDespachado();
-console.log(`El destino al que mas se despacharon maletas es: ${DestinoMasDespachado}`);
+console.log(`El destino al que m
