@@ -165,11 +165,10 @@ if (!isNaN(cantidadMaletas) && cantidadMaletas > 0) {
     console.log(`La cantidad ingresada no es valida. Por favor, ingrese un numero valido.`);
 }
 
-const promedioPesoHombres = cantidadMaletasHombres === 0 ? 0 : pesoTotalHombres / cantidadMaletasHombres;
-const promedioPesoMujeres = cantidadMaletasMujeres === 0 ? 0 : pesoTotalMujeres / cantidadMaletasMujeres;
-
+const promedioPesoHombres = cantidadMaletasHombres === 0?0: pesoTotalHombres / cantidadMaletasHombres;
+const promedioPesoMujeres = cantidadMaletasMujeres === 0?0: pesoTotalMujeres / cantidadMaletasMujeres;
 console.log(`Promedio de peso de las maletas de los hombres: ${promedioPesoHombres} KG`);
-console.log(`Promedio de peso de las maletas de las mujeres: ${promedioPesoMujeres} KG`);
+console.log(`Promedio de peso de las maletas de las mujeres: ${promedioPesoMujeres}KG`);
 
 const DestinoMasDespachado = obtenerDestinoMasDespachado();
-console.log(`El destino al que m
+console.log(`El destino al que mas se despacharon maletas es: ${DestinoMasDespachado}`);
