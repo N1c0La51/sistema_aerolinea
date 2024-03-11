@@ -12,12 +12,16 @@ let pesoTotalHombres = 0;
 let cantidadMaletasHombres = 0;
 let pesoTotalMujeres = 0;
 let cantidadMaletasMujeres = 0;
+let maletaMasPesada = {
+    id: "",
+    peso: 0
+}; // Variable para almacenar la maleta más pesada
 
 function calcularPesoTotalMaletas() {
     console.log(`El peso total de las maletas en el avion es: ${pesoTotalMaletas} KG.`);
 }
 
-function ProcesarMaleta(destino) {
+function ProcesarMaleta(destino, pesoMaleta, idMaleta) {
     switch (destino) {
         case 'San Andres':
             maletasSanAndres++;
@@ -40,6 +44,11 @@ function ProcesarMaleta(destino) {
         case 'Bogota':
             maletasBogota++;
             break;
+    }
+
+    if (pesoMaleta > maletaMasPesada.peso) { // Si el peso de esta maleta es mayor que el registro actual
+        maletaMasPesada.peso = pesoMaleta; // Actualizar el peso de la maleta más pesada
+        maletaMasPesada.id = idMaleta; // Actualizar el ID de la maleta más pesada
     }
 }
 
@@ -77,11 +86,12 @@ function obtenerDestinoMasDespachado() {
     return DestinoMasDespachado;
 }
 
-function calcularCostoMaleta(pesoMaleta) {
+function calcularCostoMaleta(pesoMaleta, destino) {
     let costoTotalMaleta = 0;
     const costoBaseMaleta = 20000;
     const pesoMaximoMaleta = 23;
     const costoPorKiloAdicional = 5000;
+    const descuentoPromo = 0.15; // 15% de descuento para destinos promocionales
 
     if (pesoMaleta > pesoMaximoMaleta) {
         const KilosExtra = pesoMaleta - pesoMaximoMaleta;
@@ -90,6 +100,12 @@ function calcularCostoMaleta(pesoMaleta) {
     } else {
         costoTotalMaleta = costoBaseMaleta;
     }
+
+    // Aplicar descuento si el destino es promocional
+    if (destino === 'Cali') {
+        costoTotalMaleta *= (1 - descuentoPromo);
+    }
+
     return costoTotalMaleta;
 }
 
@@ -132,8 +148,11 @@ function registrarMaleta() {
 
     if (!isNaN(pesoMaleta) && pesoMaleta > 0) {
         pesoTotalMaletas += pesoMaleta;
-        const costoTotal = calcularCostoMaleta(pesoMaleta);
+        const costoTotal = calcularCostoMaleta(pesoMaleta, destino);
         console.log(`El costo total de la maleta es: ${costoTotal}`);
+        
+        // Llamar a la función ProcesarMaleta para registrar la maleta y verificar si es la más pesada
+        ProcesarMaleta(destino, pesoMaleta, num_vuelo);
     } else {
         console.log(`El peso ingresado no es valido. Por favor, ingrese un peso valido.`);
         return registrarMaleta(); // Volver a solicitar el registro
@@ -141,8 +160,8 @@ function registrarMaleta() {
 
     const genero = readlineSync.question(`Ingrese el genero del propietario de la maleta (h/m): `);
     if (genero !== 'h' && genero !== 'm') {
-        console.log(`El genero ingresado no es valido. `);
-        registrarMaleta(); // volver a solicitar el registro
+        console.log(`El genero ingresado no es valido.`);
+        registrarMaleta(); // Volver a solicitar el registro
     } else {
         if (genero === 'h') {
             pesoTotalHombres += pesoMaleta;
@@ -165,10 +184,12 @@ if (!isNaN(cantidadMaletas) && cantidadMaletas > 0) {
     console.log(`La cantidad ingresada no es valida. Por favor, ingrese un numero valido.`);
 }
 
-const promedioPesoHombres = cantidadMaletasHombres === 0?0: pesoTotalHombres / cantidadMaletasHombres;
-const promedioPesoMujeres = cantidadMaletasMujeres === 0?0: pesoTotalMujeres / cantidadMaletasMujeres;
+const promedioPesoHombres = cantidadMaletasHombres === 0 ? 0 : pesoTotalHombres / cantidadMaletasHombres;
+const promedioPesoMujeres = cantidadMaletasMujeres === 0 ? 0 : pesoTotalMujeres / cantidadMaletasMujeres;
 console.log(`Promedio de peso de las maletas de los hombres: ${promedioPesoHombres} KG`);
 console.log(`Promedio de peso de las maletas de las mujeres: ${promedioPesoMujeres}KG`);
 
 const DestinoMasDespachado = obtenerDestinoMasDespachado();
 console.log(`El destino al que mas se despacharon maletas es: ${DestinoMasDespachado}`);
+
+console.log(`La maleta con mayor peso en el vuelo es la maleta con ID: ${maletaMasPesada.id}, con un peso de ${maletaMasPesada.peso} KG.`);
