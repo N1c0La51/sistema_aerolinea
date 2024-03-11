@@ -1,6 +1,6 @@
 const readlineSync = require('readline-sync');
 
-//varivalbes para mantener un registro del numero de maletas despachadas por destino
+//variables para mantener un registro del numero de maletas despachadas por destino
 let maletasSanAndres = 0;
 let maletasPereira = 0;
 let maletasMedellin = 0;
