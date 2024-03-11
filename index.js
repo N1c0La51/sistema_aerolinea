@@ -166,4 +166,4 @@ if (!isNaN(cantidadMaletas) && cantidadMaletas > 0) {
     console.log(`La cantidad ingresada no es valida. Por favor, ingrese un numero valido.`);
 }
 const DestinoMasDespachado = obtenerDestinoMasDespachado();
-console.log(`El destino al que mas se despacharon maletas es: ${DestinoMasDespachado}`);
+console.log(`El destino al que m
